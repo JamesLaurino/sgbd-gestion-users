@@ -29,7 +29,7 @@ Route::get("/user/create", [UserController::class, 'create'])->name("users.creat
 Route::get("/user/edit/{id}", [UserController::class, 'edit'])->name("users.edit")
     ->middleware("auth");
 
-Route::get("/user/show", [UserController::class, 'show'])->name("users.show")
+Route::get("/user/show/{id}", [UserController::class, 'show'])->name("users.show")
     ->middleware("auth");
 
 Route::PUT("/user", [UserController::class, 'update'])->name("users.update")
