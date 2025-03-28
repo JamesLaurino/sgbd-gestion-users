@@ -32,6 +32,9 @@ Route::get("/user/edit/{id}", [UserController::class, 'edit'])->name("users.edit
 Route::get("/user/show/{id}", [UserController::class, 'show'])->name("users.show")
     ->middleware("auth");
 
+Route::delete("/user/show/{id}", [UserController::class, 'destroy'])->name("users.destroy")
+    ->middleware("auth");
+
 Route::PUT("/user", [UserController::class, 'update'])->name("users.update")
     ->middleware("auth");
 
