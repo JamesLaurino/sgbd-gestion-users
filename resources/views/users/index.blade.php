@@ -11,6 +11,21 @@
             </div>
         </div>
     @endif
+
+        <div class="container mx-auto py-8">
+            <h1 class="text-2xl font-bold mb-6">Chercher un nouvel Utilisateur</h1>
+            <form action="{{ route('users.search') }}" method="POST">
+                @csrf
+                <div class="mb-4">
+                    <label class="block text-sm font-bold mb-2">information</label>
+                    <input type="text" name="name" class="w-full border border-gray-300 px-3 py-2" value="{{ old('name') }}">
+                </div>
+                <button type="submit" class="bg-blue-500 text-dark px-4 py-2">Search</button>
+            </form>
+        </div>
+
+
+
     <div class="container mx-auto py-8">
         <h1 class="text-2xl font-bold mb-6">Liste des Utilisateurs</h1>
 

@@ -41,5 +41,8 @@ Route::PUT("/user", [UserController::class, 'update'])->name("users.update")
 Route::post("/user", [UserController::class, 'store'])->name("users.store")
     ->middleware("auth");
 
+Route::post("/user/search", [UserController::class, 'search'])->name("users.search")
+    ->middleware("auth");
+
 
 require __DIR__.'/auth.php';

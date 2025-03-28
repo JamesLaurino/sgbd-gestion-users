@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class UserController extends Controller
 {
@@ -96,5 +98,41 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return redirect()->route('users.index')->with('danger', 'Utilisateur supprimé avec succés.');
+    }
+
+    public function search(Request $request) {
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $users = [];
+        $user = User::where('email',$validatedData['name'])
+            ->orWhere('name',$validatedData['name'])
+            ->first();
+
+        if ($user) {
+            array_push($users, $user);
+        }
+
+        // Convertir le tableau en collection Laravel
+        $usersCollection = new Collection($users);
+
+
+        $perPage = 5; // Nombre d'éléments par page
+        $page = request()->get('page', 1); // Récupérer le numéro de page, par défaut 1
+        $offset = ($page - 1) * $perPage;
+
+
+        $paginatedUsers = new LengthAwarePaginator(
+            $usersCollection->slice($offset, $perPage)->values(),
+            $usersCollection->count(),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('users.index', ['users' => $paginatedUsers]);
+
     }
 }
