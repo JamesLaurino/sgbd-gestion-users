@@ -26,7 +26,17 @@ Route::get("/users", [UserController::class, 'index'])->name("users.index")
 Route::get("/user/create", [UserController::class, 'create'])->name("users.create")
     ->middleware("auth");
 
+Route::get("/user/edit/{id}", [UserController::class, 'edit'])->name("users.edit")
+    ->middleware("auth");
+
+Route::get("/user/show", [UserController::class, 'show'])->name("users.show")
+    ->middleware("auth");
+
+Route::PUT("/user", [UserController::class, 'update'])->name("users.update")
+    ->middleware("auth");
+
 Route::post("/user", [UserController::class, 'store'])->name("users.store")
     ->middleware("auth");
+
 
 require __DIR__.'/auth.php';

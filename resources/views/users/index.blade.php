@@ -18,8 +18,8 @@
                     <td class="py-2 px-4 border-b">{{ $user->email }}</td>
                     <td class="py-2 px-4 border-b">{{ $user->role }}</td>
                     <td class="py-2 px-4 border-b">
-                        <a href="{{ route('users.index') }}" class="text-blue-500">Voir</a>
-                        <a href="{{ route('users.index') }}" class="text-yellow-500 ml-2">Modifier</a>
+                        <a href="{{ route('users.show', $user->id) }}" class="text-blue-500">Voir</a>
+                        <a href="{{ route('users.edit', $user->id) }}" class="text-yellow-500 ml-2">Modifier</a>
                     </td>
                 </tr>
             @endforeach

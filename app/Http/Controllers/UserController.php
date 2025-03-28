@@ -59,15 +59,32 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('users.edit',["user" => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required',
+            'password' => 'required|string|min:4',
+            'role' => 'required|in:user,admin',
+        ]);
+
+        $user = User::where('email', $validatedData['email'])->first();
+        $user->update([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password']),
+            'role' => $validatedData['role'],
+        ]);
+
+        return redirect()->route('users.index');
     }
 
     /**
